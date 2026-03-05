@@ -3,6 +3,7 @@ import { isEmpty } from '../../utils/object'
 import type { ComarkTree, ComarkNode, ComarkElement, ComarkComment } from 'comark/ast'
 import { EMOJI_REGEXP, getEmojiUnicode } from '../emoji'
 import { isValidAttr } from './props'
+import { isElement, isComment, getTag, getAttrs, getChildren } from '../comark'
 
 type ComarkToTipTapMap = Record<string, (node: ComarkElement) => JSONContent | JSONContent[]>
 
@@ -12,32 +13,6 @@ const tagToMark: Record<string, string> = {
   del: 'strike',
   code: 'code',
   a: 'link',
-}
-
-/*
-* ──────────────────────────────────────────────────────────────────────────────
-* ComarkNode helpers
-* ──────────────────────────────────────────────────────────────────────────────
-*/
-
-function isElement(node: ComarkNode): node is ComarkElement {
-  return Array.isArray(node) && node[0] !== null
-}
-
-function isComment(node: ComarkNode): node is ComarkComment {
-  return Array.isArray(node) && node[0] === null
-}
-
-function getTag(node: ComarkElement): string {
-  return node[0] as string
-}
-
-function getAttrs(node: ComarkElement): Record<string, unknown> {
-  return (node[1] as Record<string, unknown>) || {}
-}
-
-function getChildren(node: ComarkElement): ComarkNode[] {
-  return node.slice(2) as ComarkNode[]
 }
 
 /*
