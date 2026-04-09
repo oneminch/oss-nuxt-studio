@@ -1,5 +1,5 @@
 import type { CollectionItemBase, PageCollectionItemBase, DataCollectionItemBase } from '@nuxt/content'
-import type { ComarkTree } from 'comark/ast'
+import type { ComarkTree } from 'comark'
 import type { BaseItem } from './item'
 
 export interface DatabaseItem extends CollectionItemBase, BaseItem {

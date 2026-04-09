@@ -2,7 +2,7 @@
 import { Emoji } from '@tiptap/extension-emoji'
 import type { PropType } from 'vue'
 import type { JSONContent } from '@tiptap/vue-3'
-import type { ComarkTree } from 'comark/ast'
+import type { ComarkTree } from 'comark'
 import type { DraftItem, DatabasePageItem } from '../../../types'
 import { ref, watch, computed } from 'vue'
 import { useStudio } from '../../../composables/useStudio'

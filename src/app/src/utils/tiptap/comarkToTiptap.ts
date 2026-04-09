@@ -1,6 +1,6 @@
 import type { JSONContent } from '@tiptap/vue-3'
 import { isEmpty } from '../../utils/object'
-import type { ComarkTree, ComarkNode, ComarkElement, ComarkComment } from 'comark/ast'
+import type { ComarkTree, ComarkNode, ComarkElement, ComarkComment } from 'comark'
 import { EMOJI_REGEXP, getEmojiUnicode } from '../emoji'
 import { isValidAttr } from './props'
 import { isElement, isComment, getTag, getAttrs, getChildren } from '../comark'

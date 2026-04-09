@@ -1,6 +1,6 @@
 import type { JSONContent } from '@tiptap/vue-3'
 import Slugger from 'github-slugger'
-import type { ComarkTree, ComarkNode, ComarkElement, ComarkComment } from 'comark/ast'
+import type { ComarkTree, ComarkNode, ComarkElement, ComarkComment } from 'comark'
 import type { SyntaxHighlightTheme } from '../../types/content'
 import { getEmojiUnicode } from '../emoji'
 import { cleanSpanProps, normalizeProps } from './props'

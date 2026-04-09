@@ -1,8 +1,8 @@
-import type { ComarkTree } from 'comark/ast'
+import type { ComarkTree } from 'comark'
 import type { DatabaseItem } from 'nuxt-studio/app'
 import { ContentFileExtension } from '../../types/content'
 import { doObjectsMatch } from '../object'
-import { renderMarkdown } from 'comark/string'
+import { renderMarkdown } from 'comark/render'
 import { documentFromContent } from './generate'
 
 export async function isDocumentMatchingContent(content: string, document: DatabaseItem): Promise<boolean> {
@@ -13,8 +13,8 @@ export async function isDocumentMatchingContent(content: string, document: Datab
     const { body: documentBody, ...documentData } = document
 
     // Compare body nodes only (not frontmatter — that's compared separately via doObjectsMatch below)
-    const generatedBodyStringified = renderMarkdown({ ...(generatedBody as ComarkTree), frontmatter: {} }).replace(/\n/g, '')
-    const documentBodyStringified = renderMarkdown({ ...(documentBody as ComarkTree), frontmatter: {} }).replace(/\n/g, '')
+    const generatedBodyStringified = (await renderMarkdown({ ...(generatedBody as ComarkTree), frontmatter: {} })).replace(/\n/g, '')
+    const documentBodyStringified = (await renderMarkdown({ ...(documentBody as ComarkTree), frontmatter: {} })).replace(/\n/g, '')
     if (generatedBodyStringified !== documentBodyStringified) {
       return false
     }
@@ -25,13 +25,13 @@ export async function isDocumentMatchingContent(content: string, document: Datab
   return doObjectsMatch(generatedDocument, document)
 }
 
-export function areDocumentsEqual(document1: Record<string, unknown>, document2: Record<string, unknown>) {
+export async function areDocumentsEqual(document1: Record<string, unknown>, document2: Record<string, unknown>) {
   const { body: body1, meta: meta1, ...documentData1 } = document1
   const { body: body2, meta: meta2, ...documentData2 } = document2
 
   // Compare body first
   if (document1.extension === ContentFileExtension.Markdown) {
-    if (renderMarkdown(body1 as ComarkTree) !== renderMarkdown(body2 as ComarkTree)) {
+    if (await renderMarkdown(body1 as ComarkTree) !== await renderMarkdown(body2 as ComarkTree)) {
       return false
     }
   }

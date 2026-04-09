@@ -55,7 +55,7 @@ export const createMockHost = (): StudioHost => ({
       }),
     },
     utils: {
-      areEqual: vi.fn().mockImplementation((document1: DatabaseItem, document2: DatabaseItem) => {
+      areEqual: vi.fn().mockImplementation(async (document1: DatabaseItem, document2: DatabaseItem) => {
         return areDocumentsEqual(document1, document2)
       }),
       isMatchingContent: vi.fn().mockImplementation(async (content: string, document: DatabaseItem) => {

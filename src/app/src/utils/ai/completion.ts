@@ -4,8 +4,8 @@ import type { AIHintOptions } from '../../types/ai'
 import { tiptapSliceToComark } from '../tiptap/tiptapToComark'
 import { comarkToTiptap } from '../tiptap/comarkToTiptap'
 import { parse } from 'comark'
-import { renderMarkdown } from 'comark/string'
-import type { ComarkTree, ComarkElement, ComarkNode } from 'comark/ast'
+import { renderMarkdown } from 'comark/render'
+import type { ComarkTree, ComarkElement, ComarkNode } from 'comark'
 
 function isWhitespace(char: string): boolean {
   return /\s/.test(char)
@@ -215,7 +215,7 @@ export async function tiptapSliceToMarkdown(
   const cleanedTree = cleanComark(tree)
 
   // Stringify ComarkTree to markdown
-  const markdown = renderMarkdown(cleanedTree)
+  const markdown = await renderMarkdown(cleanedTree)
 
   if (!markdown) {
     return ''

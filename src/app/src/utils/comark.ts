@@ -1,4 +1,4 @@
-import type { ComarkNode, ComarkElement, ComarkComment } from 'comark/ast'
+import type { ComarkNode, ComarkElement, ComarkComment } from 'comark'
 
 export function isElement(node: ComarkNode): node is ComarkElement {
   return Array.isArray(node) && node[0] !== null

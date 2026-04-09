@@ -1,12 +1,12 @@
 import { describe, it, expect } from 'vitest'
 import { areDocumentsEqual, isDocumentMatchingContent, sanitizeDocumentTree } from '../../src/runtime/utils/document'
 import { ContentFileExtension } from '../../src/types/content'
-import type { DatabaseItem, DatabasePageItem } from 'nuxt-studio/app'
+import type { DatabaseItem } from 'nuxt-studio/app'
 import type { CollectionInfo } from '@nuxt/content'
 
 describe('areDocumentsEqual', () => {
-  it('should return true for two identical markdown documents with diffrent hash', () => {
-    const document1: DatabasePageItem = {
+  it('should return true for two identical markdown documents with diffrent hash', async () => {
+    const document1: DatabaseItem = {
       id: 'content:index.md',
       path: '/index',
       title: 'Test Document',
@@ -20,7 +20,7 @@ describe('areDocumentsEqual', () => {
       },
     }
 
-    const document2: DatabasePageItem = {
+    const document2: DatabaseItem = {
       id: 'content:index.md',
       path: '/index',
       title: 'Test Document',
@@ -34,11 +34,11 @@ describe('areDocumentsEqual', () => {
       },
     }
 
-    expect(areDocumentsEqual(document1, document2)).toBe(true)
+    expect(await areDocumentsEqual(document1, document2)).toBe(true)
   })
 
-  it('should return false for two different markdown documents', () => {
-    const document1: DatabasePageItem = {
+  it('should return false for two different markdown documents', async () => {
+    const document1: DatabaseItem = {
       id: 'content:index.md',
       path: '/index',
       title: 'Test Document',
@@ -52,7 +52,7 @@ describe('areDocumentsEqual', () => {
       },
     }
 
-    const document2: DatabasePageItem = {
+    const document2: DatabaseItem = {
       id: 'content:index.md',
       path: '/index',
       title: 'Test Document',
@@ -66,11 +66,11 @@ describe('areDocumentsEqual', () => {
       },
     }
 
-    expect(areDocumentsEqual(document1, document2)).toBe(false)
+    expect(await areDocumentsEqual(document1, document2)).toBe(false)
   })
 
-  it('should return true for two identical yaml document with different order of keys', () => {
-    const document1: DatabasePageItem = {
+  it('should return true for two identical yaml document with different order of keys', async () => {
+    const document1: DatabaseItem = {
       extension: ContentFileExtension.YAML,
       description: 'A test document',
       title: 'Test Document',
@@ -88,7 +88,7 @@ describe('areDocumentsEqual', () => {
       },
     }
 
-    const document2: DatabasePageItem = {
+    const document2: DatabaseItem = {
       id: 'content:index.yml',
       stem: 'index.yml',
       path: '/index',
@@ -106,11 +106,11 @@ describe('areDocumentsEqual', () => {
       },
     }
 
-    expect(areDocumentsEqual(document1, document2)).toBe(true)
+    expect(await areDocumentsEqual(document1, document2)).toBe(true)
   })
 
-  it('should return true if one document has extra key with null/undefined value', () => {
-    const document1: DatabasePageItem = {
+  it('should return true if one document has extra key with null/undefined value', async () => {
+    const document1: DatabaseItem = {
       id: 'content:index.yml',
       path: '/index',
       title: 'Test Document',
@@ -126,7 +126,7 @@ describe('areDocumentsEqual', () => {
         title: 'Test Document',
       },
     }
-    const document2: DatabasePageItem = {
+    const document2: DatabaseItem = {
       id: 'content:index.yml',
       path: '/index',
       title: 'Test Document',
@@ -143,11 +143,11 @@ describe('areDocumentsEqual', () => {
         title: 'Test Document',
       },
     }
-    expect(areDocumentsEqual(document1, document2)).toBe(true)
+    expect(await areDocumentsEqual(document1, document2)).toBe(true)
   })
 
-  it('should ignore null/undefined values', () => {
-    const document1: DatabasePageItem = {
+  it('should ignore null/undefined values', async () => {
+    const document1: DatabaseItem = {
       id: 'content:index.yml',
       path: '/index',
       title: 'Test Document',
@@ -164,7 +164,7 @@ describe('areDocumentsEqual', () => {
       },
     }
 
-    const document2: DatabasePageItem = {
+    const document2: DatabaseItem = {
       id: 'content:index.yml',
       path: '/index',
       title: 'Test Document',
@@ -181,11 +181,11 @@ describe('areDocumentsEqual', () => {
       },
     }
 
-    expect(areDocumentsEqual(document1, document2)).toBe(true)
+    expect(await areDocumentsEqual(document1, document2)).toBe(true)
   })
 
-  it('should return false if one of documents missing a key', () => {
-    const document1: DatabasePageItem = {
+  it('should return false if one of documents missing a key', async () => {
+    const document1: DatabaseItem = {
       id: 'content:index.yml',
       path: '/index',
       title: 'Test Document',
@@ -215,13 +215,13 @@ describe('areDocumentsEqual', () => {
       meta: {
         title: 'Test Document',
       },
-    } as never as DatabasePageItem
+    } as never as DatabaseItem
 
-    expect(areDocumentsEqual(document1, document2)).toBe(false)
+    expect(await areDocumentsEqual(document1, document2)).toBe(false)
   })
 
-  it('should return false if array values are different', () => {
-    const document1: DatabasePageItem = {
+  it('should return false if array values are different', async () => {
+    const document1: DatabaseItem = {
       id: 'content:index.yml',
       path: '/index',
       title: 'Test Document',
@@ -239,7 +239,7 @@ describe('areDocumentsEqual', () => {
       },
     }
 
-    const document2: DatabasePageItem = {
+    const document2: DatabaseItem = {
       id: 'content:index.yml',
       path: '/index',
       tags: ['tag1', 'tag3'],
@@ -257,11 +257,11 @@ describe('areDocumentsEqual', () => {
       },
     }
 
-    expect(areDocumentsEqual(document1, document2)).toBe(false)
+    expect(await areDocumentsEqual(document1, document2)).toBe(false)
   })
 
-  it('should return true if date values are same but different format', () => {
-    const document1: DatabasePageItem = {
+  it('should return true if date values are same but different format', async () => {
+    const document1: DatabaseItem = {
       id: 'content:index.yml',
       path: '/index',
       title: 'Test Document',
@@ -278,7 +278,7 @@ describe('areDocumentsEqual', () => {
         title: 'Test Document',
       },
     }
-    const document2: DatabasePageItem = {
+    const document2: DatabaseItem = {
       id: 'content:index.yml',
       path: '/index',
       title: 'Test Document',
@@ -296,7 +296,7 @@ describe('areDocumentsEqual', () => {
       },
     }
 
-    expect(areDocumentsEqual(document1, document2)).toBe(true)
+    expect(await areDocumentsEqual(document1, document2)).toBe(true)
   })
 })
 

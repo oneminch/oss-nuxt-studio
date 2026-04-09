@@ -16,7 +16,7 @@
 import type { MarkdownRoot } from '@nuxt/content'
 import type { MDCRoot, MDCElement, MDCNode, MDCText, MDCComment } from '@nuxtjs/mdc'
 import type { DatabaseItem } from 'nuxt-studio/app'
-import type { ComarkTree, ComarkNode, ComarkElement, ComarkComment } from 'comark/ast'
+import type { ComarkTree, ComarkNode, ComarkElement, ComarkComment } from 'comark'
 import { compressTree, decompressTree } from '@nuxt/content/runtime'
 import { generateFlatToc } from 'comark/plugins/toc'
 import { cleanDataKeys } from './schema'

@@ -277,7 +277,7 @@ export function useStudioHost(user: StudioUser, repository: Repository): StudioH
         },
       },
       utils: {
-        areEqual: (document1: DatabaseItem, document2: DatabaseItem) => areDocumentsEqual(document1, document2),
+        areEqual: async (document1: DatabaseItem, document2: DatabaseItem) => areDocumentsEqual(document1, document2),
         isMatchingContent: async (content: string, document: DatabaseItem) => isDocumentMatchingContent(content, document),
         pickReservedKeys: (document: DatabaseItem) => pickReservedKeysFromDocument(document),
         cleanDataKeys: (document: DatabaseItem) => cleanDataKeys(document),

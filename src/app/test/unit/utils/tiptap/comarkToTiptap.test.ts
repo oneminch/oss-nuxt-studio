@@ -1,6 +1,6 @@
 import { test, describe, expect } from 'vitest'
 import { createMark } from '../../../../src/utils/tiptap/comarkToTiptap'
-import type { ComarkElement } from 'comark/ast'
+import type { ComarkElement } from 'comark'
 
 describe('marks', () => {
   test('createMark: create `italic` mark nodes', () => {

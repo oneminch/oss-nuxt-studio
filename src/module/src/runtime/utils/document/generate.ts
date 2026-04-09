@@ -4,9 +4,9 @@ import { ContentFileExtension } from '../../types/content'
 import { parse } from 'comark'
 import comarkEmoji from 'comark/plugins/emoji'
 import tocPlugin from 'comark/plugins/toc'
-import type { ComarkTree } from 'comark/ast'
+import type { ComarkTree } from 'comark'
 import highlight from 'comark/plugins/highlight'
-import { renderMarkdown } from 'comark/string'
+import { renderMarkdown } from 'comark/render'
 import destr from 'destr'
 import yaml from 'js-yaml'
 import { useHostMeta } from '../../composables/useMeta'
@@ -155,6 +155,6 @@ export async function contentFromJSONDocument(document: DatabaseItem): Promise<s
 }
 
 export async function contentFromMarkdownDocument(document: DatabaseItem): Promise<string | null> {
-  const markdown = renderMarkdown(document.body as unknown as ComarkTree)
+  const markdown = await renderMarkdown(document.body as unknown as ComarkTree)
   return markdown.replace(/&#x2A;/g, '*') + '\n'
 }

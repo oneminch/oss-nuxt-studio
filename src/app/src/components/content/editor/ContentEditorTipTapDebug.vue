@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, type PropType } from 'vue'
 import type { JSONContent } from '@tiptap/vue-3'
-import type { ComarkTree } from 'comark/ast'
+import type { ComarkTree } from 'comark'
 
 const props = defineProps({
   currentTiptap: {

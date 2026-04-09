@@ -5,7 +5,7 @@ import type { DatabasePageItem } from '../../src/types'
 import { createMockDocument } from '../mocks/document'
 import { comarkToTiptap } from '../../src/utils/tiptap/comarkToTiptap'
 import { tiptapToComark } from '../../src/utils/tiptap/tiptapToComark'
-import type { ComarkTree, ComarkNode } from 'comark/ast'
+import type { ComarkTree, ComarkNode } from 'comark'
 
 describe('paragraph', () => {
   test('simple paragraph', async () => {
@@ -1526,7 +1526,6 @@ describe('images', () => {
 describe('videos', () => {
   test('simple video with controls', async () => {
     const inputContent = ':video{controls src="https://example.com/video.mp4"}'
-
 
     // After roundtrip through tiptap, tiptapToComark normalizes booleans to colon-prefix for correct MDC serialization
     const expectedComarkNodes = [
